@@ -1,0 +1,19 @@
+package com.upgrad;
+
+import org.openqa.selenium.*;
+import org.openqa.selenium.firefox.*;
+import org.testng.annotations.Test;
+import junit.framework.Assert;
+
+public class IMDBtest {
+
+	@Test()
+	public void imdb250(){
+		WebDriver wd = new FirefoxDriver();
+		wd.get("http://www.imdb.com/chart/top");
+		wd.manage().window().maximize();
+		
+		String xpathStart=".//*[@id='main']/div/span/div/div/div[2]/table/tbody/tr[";
+		String xpathEnd="]/td[2]/a";
+	}
+}

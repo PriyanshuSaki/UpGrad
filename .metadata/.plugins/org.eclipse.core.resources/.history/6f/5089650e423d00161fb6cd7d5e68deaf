@@ -1,0 +1,248 @@
+package com.utils;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DateUtil;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ArrayList;
+
+public class ExcelReader {
+
+	String sheetName1;
+	String filename ;
+
+
+	public  List<?> readExcel(String fileName, String sheetName) throws Exception {  
+
+		List<?> list=   readExcelMain(CommonConstants.EXCEL_DATAGEN_FILE_LOCATION, fileName,sheetName);
+
+		return list;
+	}         
+
+
+	public  List<?> readExcelMain(String filePath, String fileName, String sheetName) throws Exception {
+
+		ExcelDataReaderMethods readMethod=new ExcelDataReaderMethods();
+		sheetName1=	sheetName;
+		filename = filePath+fileName;
+		int  noOfRows=0;
+
+		System.out.println("sheetname is "+sheetName1);
+		//
+		// Create an ArrayList to store the data read from excel sheet.
+		//
+		List sheetData = new ArrayList();
+		FileInputStream fis = null;
+		try {
+			fis = new FileInputStream(filename);
+			XSSFWorkbook workbook = new XSSFWorkbook(fis);
+			//	workbook.ge
+			XSSFSheet sheet = workbook.getSheet(sheetName1);
+			Iterator rows = sheet.rowIterator();
+			while (rows.hasNext()) {
+				XSSFRow row = (XSSFRow) rows.next();
+				Iterator cells = row.cellIterator();
+
+				List data = new ArrayList();
+				while (cells.hasNext()) {
+					XSSFCell cell = (XSSFCell) cells.next();
+					data.add(cell);
+				}
+				sheetData.add(data);
+				noOfRows++;
+
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (fis != null) {
+				fis.close();
+			}
+		}
+		List<?> retrunList=null;
+
+		if(sheetName1.equalsIgnoreCase("SUPC"))
+		{
+			//System.out.println("Calling SUPC Excel Reader Method --- ");
+			retrunList=readMethod.getExelData_CreateSUPC(sheetName, sheetData);
+			//System.out.println("returning value :: "+retrunList);
+		}
+
+
+		else if(sheetName1.equalsIgnoreCase("SUPC_NEW"))
+		{
+			//System.out.println("Calling SUPC Excel Reader Method --- ");
+			retrunList=readMethod.getExelData_CreateSUPC(sheetName, sheetData);
+			//System.out.println("returning value :: "+retrunList);
+		}
+
+		else if(sheetName1.equalsIgnoreCase("PINCODE"))
+		{
+			//System.out.println("Calling POSTAL_CODE Excel Reader Method --- ");
+			retrunList=readMethod.getExelData_CreatePincode(sheetName, sheetData);
+			//System.out.println("returning value :: "+retrunList);
+		}
+
+
+		else if(sheetName1.equalsIgnoreCase("VENDOR"))
+		{
+			//System.out.println("Calling VENDOR Excel Reader Method --- ");
+			retrunList=readMethod.getExelData_CreateVendor(sheetName, sheetData);
+			//System.out.println("returning value :: "+retrunList);
+		}
+
+		else if(sheetName1.equalsIgnoreCase("CPL"))
+		{
+			//System.out.println("Calling CPL Excel Reader Method --- ");
+			retrunList=readMethod.getExelData_CreateCPL(sheetName, sheetData);
+			//System.out.println("returning value :: "+retrunList);
+		}
+
+		else if(sheetName1.equalsIgnoreCase("SHIPPING_LOCATION"))
+		{
+			//System.out.println("Calling SHP Location Excel Reader Method --- ");
+			retrunList=readMethod.getExelData_CreateShippingLocation(sheetName, sheetData);
+			//System.out.println("returning value from shpLocan is :: "+retrunList);
+		}
+
+		else if(sheetName1.equalsIgnoreCase("RETURN_SHIPPING_LOCATION"))
+		{
+			//System.out.println("Calling SHP Location Excel Reader Method --- ");
+			retrunList=readMethod.getExelData_CreateReturnShippingLocation(sheetName, sheetData);
+			//System.out.println("returning value from return shpLocan is :: "+retrunList);
+		}
+
+		else if(sheetName1.equalsIgnoreCase("RTV_SHIPPING_LOCATION"))
+		{
+			//System.out.println("Calling SHP Location Excel Reader Method --- ");
+			retrunList=readMethod.getExelData_CreateRTVShippingLocation(sheetName, sheetData);
+			System.out.println("returning value from RTV shpLocan is :: "+retrunList);
+		}
+
+		else if(sheetName1.equalsIgnoreCase("SHIPPING_PROVIDER"))
+		{
+			//System.out.println("Calling SHP Provider Excel Reader Method --- ");
+			retrunList=readMethod.getExelData_CreateShippingProvider(sheetName, sheetData);
+			//System.out.println("returning value :: "+retrunList);
+		}
+
+		else if(sheetName1.equalsIgnoreCase("RETURN_CR_RULES")||sheetName1.equalsIgnoreCase("RRICA_RULES") ||sheetName1.equalsIgnoreCase("ICA_RULES") || sheetName1.equalsIgnoreCase("VENDOR_RULES") || sheetName1.equalsIgnoreCase("CATEGORY_RULES") || sheetName1.equalsIgnoreCase("SUPC_RULES") || sheetName1.equalsIgnoreCase("FC_RULES") || sheetName1.equalsIgnoreCase("COURIER_RULES"))
+		{
+			//System.out.println("Calling SCORE RULES Excel Reader Method --- ");
+			retrunList=readMethod.getExelData_CreateScoreRules(sheetName, sheetData);
+			System.out.println("returning value from score rule creation bean obj is :: "+retrunList);
+		}
+
+
+		else if(sheetName1.equalsIgnoreCase("RETURN_CR_RULE_PARAMS")||sheetName1.equalsIgnoreCase("RRICA_RULE_PARAMS") ||sheetName1.equalsIgnoreCase("ICA_RULE_PARAMS") || sheetName1.equalsIgnoreCase("VENDOR_RULE_PARAMS") || sheetName1.equalsIgnoreCase("CATEGORY_RULE_PARAMS") || sheetName1.equalsIgnoreCase("SUPC_RULE_PARAMS") ||sheetName1.equalsIgnoreCase("FC_RULE_PARAMS") || sheetName1.equalsIgnoreCase("COURIER_RULE_PARAMS"))
+		{
+			//System.out.println("Calling SCORE RULES Excel Reader Method --- ");
+			retrunList=readMethod.getExelData_CreateScoreRuleParams(sheetName, sheetData);
+			System.out.println("returning value from score rule creation bean obj is :: "+retrunList);
+		}
+
+		else if(sheetName1.equalsIgnoreCase("RETURN_CR_RULE_CRITERIA")||sheetName1.equalsIgnoreCase("RRICA_RULE_CRITERIA") || sheetName1.equalsIgnoreCase("ICA_RULE_CRITERIA") || sheetName1.equalsIgnoreCase("VENDOR_RULE_CRITERIA") || sheetName1.equalsIgnoreCase("CATEGORY_RULE_CRITERIA") || sheetName1.equalsIgnoreCase("SUPC_RULE_CRITERIA") ||sheetName1.equalsIgnoreCase("FC_RULE_CRITERIA") || sheetName1.equalsIgnoreCase("COURIER_RULE_CRITERIA"))
+		{
+			//System.out.println("Calling SCORE RULES Excel Reader Method --- ");
+			retrunList=readMethod.getExelData_CreateScoreRuleCriterias(sheetName, sheetData);
+			System.out.println("returning value from score rule criteria creation bean obj is :: "+retrunList);
+		}
+
+		else if(sheetName1.equalsIgnoreCase("LINEHAUL_CDetails_Mapping"))
+		{
+			//System.out.println("Calling SCORE RULES Excel Reader Method --- ");
+			retrunList=readMethod.getExelData_CreateLinehaulCentreDetail(sheetName, sheetData);
+			System.out.println("returning value from linehaul centre creation bean obj is :: "+retrunList);
+		}
+
+		else if(sheetName1.equalsIgnoreCase("LINEHAUL_CCentre_Mapping"))
+		{
+			//System.out.println("Calling SCORE RULES Excel Reader Method --- ");
+			retrunList=readMethod.getExelData_CreateLinehaulCentreCentre(sheetName, sheetData);
+			System.out.println("returning value from linehaul centre centre creation bean obj is :: "+retrunList);
+		}
+
+		else if(sheetName1.equalsIgnoreCase("LINEHAUL_CLMC_Mapping"))
+		{
+			//System.out.println("Calling SCORE RULES Excel Reader Method --- ");
+			retrunList=readMethod.getExelData_CreateLinehaulCentreLMC(sheetName, sheetData);
+			System.out.println("returning value from linehaul centre LMC creation bean obj is :: "+retrunList);
+		}
+
+		else if(sheetName1.equalsIgnoreCase("LINEHAUL_CPincode_Mapping"))
+		{
+			//System.out.println("Calling SCORE RULES Excel Reader Method --- ");
+			retrunList=readMethod.getExelData_CreateLinehaulCentrePincode(sheetName, sheetData);
+			System.out.println("returning value from linehaul centre pincode creation bean obj is :: "+retrunList);
+		}
+
+		else if(sheetName1.equalsIgnoreCase("LINEHAUL_CWarehouse_Mapping"))
+		{
+			//System.out.println("Calling SCORE RULES Excel Reader Method --- ");
+			retrunList=readMethod.getExelData_CreateLinehaulCentreWarehouse(sheetName, sheetData);
+			System.out.println("returning value from linehaul centre warehouse creation bean obj is :: "+retrunList);
+		}
+
+		else if(sheetName1.equalsIgnoreCase("TRACKING_NUMBER"))
+		{
+			//System.out.println("Calling SCORE RULES Excel Reader Method --- ");
+			retrunList=readMethod.getExelData_CreateTrackingNumber(sheetName, sheetData);
+			System.out.println("returning value from awb number creation bean obj is :: "+retrunList);
+		}
+
+		else if(sheetName1.equalsIgnoreCase("RETURN_TRACKING_NUMBER"))
+		{
+			//System.out.println("Calling SCORE RULES Excel Reader Method --- ");
+			retrunList=readMethod.getExelData_CreateReturnTrackingNumber(sheetName, sheetData);
+			System.out.println("returning value from awb number creation bean obj is :: "+retrunList);
+		}
+
+		else if(sheetName1.equalsIgnoreCase("RETURN_CWSLOT_CAPACITY"))
+		{
+			//System.out.println("Calling SLot Capacity Excel Reader Method --- ");
+			retrunList=readMethod.getExelData_CreateReturnCWSlotCapacity(sheetName, sheetData);
+			//System.out.println("returning value :: "+retrunList);
+		}
+
+		return	retrunList;
+	}
+
+	public  String getCellValue(Cell cell) {
+		String cellValue = null;
+		if (cell.getCellType() == Cell.CELL_TYPE_BOOLEAN) {
+
+			cellValue = String.valueOf(cell.getBooleanCellValue()); }
+		else if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC)
+		{
+
+			if (DateUtil.isCellDateFormatted(cell)) {
+				cellValue = String.valueOf(cell.getDateCellValue());
+				// System.out.println("Date :"+cell.getDateCellValue()+ "\t\t");
+			} else {
+				//    	  cellValue = String.valueOf(cell.getNumericCellValue());
+				cellValue = String.valueOf(new Double(cell.getNumericCellValue()).intValue());
+				// System.out.println("Numeric  "+cell.getNumericCellValue()+ "\t\t");
+			}
+
+		}
+		else if (cell.getCellType() == Cell.CELL_TYPE_FORMULA) {
+			cellValue = (String.valueOf(cell.getCellFormula())); }
+		else if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+			cellValue = cell.getStringCellValue(); }
+		else if (cell.getCellType() == Cell.CELL_TYPE_ERROR) {
+			cellValue = String.valueOf(cell.getErrorCellValue()); }
+		else {
+			cellValue = ""; }
+
+		return cellValue;
+	}
+
+}

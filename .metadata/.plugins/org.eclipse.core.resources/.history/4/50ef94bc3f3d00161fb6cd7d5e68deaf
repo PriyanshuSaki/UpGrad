@@ -1,0 +1,16 @@
+package com.upgrad;
+
+import org.openqa.selenium.*;
+import org.openqa.selenium.firefox.*;
+import org.testng.annotations.Test;
+import junit.framework.Assert;
+
+public class IMDBtest {
+
+	@Test()
+	public void imdb250(){
+		WebDriver wd = new FirefoxDriver();
+		wd.get("http://www.imdb.com/chart/top");
+		
+	}
+}

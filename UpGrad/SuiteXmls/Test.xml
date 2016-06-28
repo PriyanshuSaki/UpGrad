@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="UpGrad" parallel="tests" thread-count="1">
+	<test name="imdb250">
+		<classes>
+			<class name="com.upgrad.IMDBtest"></class>
+		</classes>
+	</test>
+</suite>
