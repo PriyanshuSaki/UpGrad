@@ -47,19 +47,7 @@ public class ExcelReader {
 				fis.close();
 			}
 		}
-		/*List<String> resultList= new ArrayList<String>();
-		
-		
-		
-		for (int i = 0; i < sheetData.size(); i++) {
-			List list = (List) sheetData.get(i);
-			int colNo = 1;
-			for (int j = 0; j < list.size(); j++, colNo++) {
-				XSSFCell cell = (XSSFCell) list.get(j);
-				String cellValue = cell.getStringCellValue();
-				resultList.add(cellValue);
-			}
-		}*/
+
 		return	sheetData;
 	}
 
