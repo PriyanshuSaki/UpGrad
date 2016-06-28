@@ -12,11 +12,13 @@ public class IMDB_Chart {
 
 	public  WebElement[][] getMovieList(WebDriver wd){
 		String xpathStart=".//*[@id='main']/div/span/div/div/div[2]/table/tbody/tr[";
+		//                  .//*[@id='main']/div/span/div/div/div[2]/table/tbody/tr[1]/td[2]/span
+		
 		String xpathEnd="]/td[2]/a";
-		for(int i=0;i<250;i++){
-			elementList[i][0]=wd.findElement(By.xpath(xpathStart+(i+1)+xpathEnd));
-			elementList[i][1]=wd.findElement(By.xpath(xpathStart+(i+1)+"]/td[2]/span"));
-			elementList[i][2]=wd.findElement(By.xpath(xpathStart+(i+1)+"]/td[3]/strong"));
+		for(int i=1;i<=250;i++){
+			elementList[i][1]=wd.findElement(By.xpath(xpathStart+i+xpathEnd));
+			elementList[i][2]=wd.findElement(By.xpath(xpathStart+i+"]/td[2]/span"));
+		
 		}
 		return elementList;
 	}

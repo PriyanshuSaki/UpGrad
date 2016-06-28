@@ -18,21 +18,15 @@ public class IMDBtest {
 		wd.get("http://www.imdb.com/chart/top");
 		wd.manage().window().maximize();
 		IMDB_Chart chart= new IMDB_Chart();
+		WebElements[][] movies =chart.getMovieList(wd);
 		
-		//getting all the movies , their release year and ratings from the website
-		WebElement[][] movies =chart.getMovieList(wd);
-		
-		//fetching the stored data
 		ExcelReader xls= new ExcelReader();
-		String[][] expectedList=  xls.readExcel();
-	
-		//asserting the fetched data with the data from excel
-		Assert.assertTrue(movies.length>0);
-		if(movies.length==expectedList.length){
+		List<String> expectedList= (List<String>) xls.readExcel();
+		
+		Assert.assertTrue(movies.size()>0);
+		if(movies.size()==expectedList.size()){
 			for(int i=0;i<250;i++){
-				Assert.assertEquals(movies[i][0].getText(), expectedList[i][0]);
-				Assert.assertEquals(movies[i][1].getText(), expectedList[i][1]);
-				Assert.assertEquals(movies[i][2].getText(), expectedList[i][2]);
+				Assert.assertEquals(movies.get(i).getText(), expectedList.get(i));
 			}
 		}
 		else {

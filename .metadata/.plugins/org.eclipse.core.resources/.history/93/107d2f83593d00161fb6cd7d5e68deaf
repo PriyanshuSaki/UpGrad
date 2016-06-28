@@ -12,6 +12,8 @@ public class IMDB_Chart {
 
 	public  WebElement[][] getMovieList(WebDriver wd){
 		String xpathStart=".//*[@id='main']/div/span/div/div/div[2]/table/tbody/tr[";
+		//                  .//*[@id='main']/div/span/div/div/div[2]/table/tbody/tr[1]/td[2]/span
+		//					.//*[@id='main']/div/span/div/div/div[2]/table/tbody/tr[1]/td[3]/strong
 		String xpathEnd="]/td[2]/a";
 		for(int i=0;i<250;i++){
 			elementList[i][0]=wd.findElement(By.xpath(xpathStart+(i+1)+xpathEnd));

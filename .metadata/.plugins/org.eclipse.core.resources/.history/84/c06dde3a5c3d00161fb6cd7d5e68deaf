@@ -18,27 +18,25 @@ public class ExcelReader {
 
      
 
-	public  String[][] readExcel() throws Exception {
+	public  List<?> readExcel() throws Exception {
 
 		String filename = "resources/movies.xlsx";
-		String[][] sheetData = new String[250][3];
+		List sheetData = new ArrayList();
 		FileInputStream fis = null;
 		try {
 			fis = new FileInputStream(filename);
 			XSSFWorkbook workbook = new XSSFWorkbook(fis);
 			XSSFSheet sheet = workbook.getSheet("Sheet1");
-			int rowCount=0;
 			Iterator rows = sheet.rowIterator();
 			while (rows.hasNext()) {
 				XSSFRow row = (XSSFRow) rows.next();
 				Iterator cells = row.cellIterator();
-				int colCount=0;
+				List data = new ArrayList();
 				while (cells.hasNext()) {
 					XSSFCell cell = (XSSFCell) cells.next();
-					sheetData[rowCount][colCount]=cell.getStringCellValue();
-					colCount++;
+					data.add(cell);
 				}
-				rowCount++;
+				sheetData.add(data);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -47,7 +45,7 @@ public class ExcelReader {
 				fis.close();
 			}
 		}
-		/*List<String> resultList= new ArrayList<String>();
+		List<String> resultList= new ArrayList<String>();
 		
 		
 		
@@ -59,8 +57,8 @@ public class ExcelReader {
 				String cellValue = cell.getStringCellValue();
 				resultList.add(cellValue);
 			}
-		}*/
-		return	sheetData;
+		}
+		return	resultList;
 	}
 
 

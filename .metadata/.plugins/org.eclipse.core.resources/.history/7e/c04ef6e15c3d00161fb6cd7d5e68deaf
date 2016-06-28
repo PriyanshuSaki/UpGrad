@@ -38,7 +38,7 @@ public class ExcelReader {
 					sheetData[rowCount][colCount]=cell.getStringCellValue();
 					colCount++;
 				}
-				rowCount++;
+				sheetData.add(data);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -47,7 +47,7 @@ public class ExcelReader {
 				fis.close();
 			}
 		}
-		/*List<String> resultList= new ArrayList<String>();
+		List<String> resultList= new ArrayList<String>();
 		
 		
 		
@@ -59,8 +59,8 @@ public class ExcelReader {
 				String cellValue = cell.getStringCellValue();
 				resultList.add(cellValue);
 			}
-		}*/
-		return	sheetData;
+		}
+		return	resultList;
 	}
 
 
