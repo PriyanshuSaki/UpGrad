@@ -11,10 +11,10 @@ import org.testng.annotations.Test;
 import junit.framework.Assert;
 
 public class IMDBtest {
-	WebDriver wd = null;
+	WebDriver wd = new FirefoxDriver();
 	@Test()
 	public void imdb250() throws Exception{
-		wd =new FirefoxDriver();
+		
 		wd.get("http://www.imdb.com/chart/top");
 		wd.manage().window().maximize();
 		IMDB_Chart chart= new IMDB_Chart();
@@ -36,6 +36,6 @@ public class IMDBtest {
 	
 	@AfterClass
 	public void afterClass(){
-		wd.close();
+		
 	}
 }
